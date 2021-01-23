@@ -15,13 +15,20 @@ MainWindow::MainWindow(QWidget *parent)
         cameraDialog->show();
         cameraDialog->activateWindow();
     });
-
+    settingDialog = new SettingDialog(this);
+    connect(ui->actionSetting,&QAction::triggered,[this]{
+       if (!settingDialog){
+            settingDialog = new SettingDialog(this);
+       }
+       settingDialog->setAllCamera(cameraDialog->getAllCamera());
+       settingDialog->show();
+       settingDialog->activateWindow();
+    });
 
     connect(cameraDialog,&CameraDialog::sendSelectedCamera,[this](const QCameraInfo& info){
 
         int pos = findCamera(info);
         if(pos!=-1){
-            //allDisplay[pos]->stop();
         }else{
             auto display = new SubWindow(info,this);
             allDisplay.push_back(display);

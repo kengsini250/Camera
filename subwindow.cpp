@@ -12,6 +12,7 @@ SubWindow::SubWindow(const QCameraInfo &info, QWidget *p):QMdiSubWindow(p),x(20)
     camera = new QCamera(info);
     camera->setViewfinder(display);
     camera->start();
+    working = true;
 }
 
 bool SubWindow::isWorking()
@@ -46,4 +47,5 @@ QCameraViewfinder* SubWindow::getDisplay()
 void SubWindow::stop()
 {
     camera->stop();
+    working=false;
 }

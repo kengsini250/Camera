@@ -6,6 +6,7 @@
 #include <QtAlgorithms>
 
 #include "CameraDialog/cameradialog.h"
+#include "SettingDialog/settingdialog.h"
 #include "subwindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,8 +25,14 @@ private:
     Ui::MainWindow *ui;
 
     CameraDialog* cameraDialog;
+    SettingDialog* settingDialog;
     QList<SubWindow*> allDisplay;
 
+    /**
+     * @brief findCamera
+     * @param info
+     * @return 不重复返回-1
+     */
     int findCamera(const QCameraInfo& info);
 };
 #endif // MAINWINDOW_H
