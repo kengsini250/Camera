@@ -8,6 +8,7 @@ CameraDialog::CameraDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&CameraDialog::selectedCamera);
+    connect(ui->listView,&QListView::doubleClicked,this,&CameraDialog::selectedCamera);
 }
 
 CameraDialog::~CameraDialog()
@@ -31,6 +32,11 @@ void CameraDialog::updateCamera()
     }
     ui->listView->setModel(model);
     ui->labelCount->setText(QString::number(allCamera.size()));
+}
+
+QMap<QString, QCameraInfo> CameraDialog::getAllCamera()
+{
+    return allCamera;
 }
 
 bool CameraDialog::findCamera(QString name)

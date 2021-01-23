@@ -10,7 +10,6 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 
-#include <QDebug>
 
 namespace Ui {
 class CameraDialog;
@@ -25,10 +24,16 @@ public:
     ~CameraDialog();
 
     void updateCamera();
+    QMap<QString,QCameraInfo> getAllCamera();
 
 private:
     Ui::CameraDialog *ui;
     QMap<QString,QCameraInfo> allCamera;
+
+    /**
+     * @brief findCamera
+     * @return 不重复返回true
+     */
     bool findCamera(QString);
 
 private slots:

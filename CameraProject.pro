@@ -12,18 +12,21 @@ CONFIG += c++11
 
 # Input
 HEADERS += \
+           SettingDialog/settingdialog.h \
            mainwindow.h \
            CameraDialog/cameradialog.h \
            subwindow.h
 
 SOURCES += \
+        SettingDialog/settingdialog.cpp \
         main.cpp \
         mainwindow.cpp \
         CameraDialog/cameradialog.cpp \
         subwindow.cpp
 
 FORMS += mainwindow.ui \
-        CameraDialog/cameradialog.ui
+        CameraDialog/cameradialog.ui \
+        SettingDialog/settingdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
