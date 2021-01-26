@@ -15,6 +15,7 @@ HEADERS += \
            SettingDialog/settingdialog.h \
            mainwindow.h \
            CameraDialog/cameradialog.h \
+           save.h \
            subwindow.h
 
 SOURCES += \
@@ -22,6 +23,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         CameraDialog/cameradialog.cpp \
+        save.cpp \
         subwindow.cpp
 
 FORMS += mainwindow.ui \

@@ -6,6 +6,8 @@
 #include <QCameraInfo>
 #include <QCamera>
 
+#include "save.h"
+
 class SubWindow : public QMdiSubWindow
 {
 private:
@@ -14,9 +16,11 @@ private:
     QCameraViewfinder* display;
     QCameraInfo info;
     QCamera* camera;
+    Save* save;
 public:
     SubWindow(QWidget* p = nullptr);
     SubWindow(const QCameraInfo& info, QWidget* p = nullptr);
+    ~SubWindow();
     bool isWorking();
     void setPosSize(int x,int y,int w,int h);
     void setCameraInfo(const QCameraInfo& info);

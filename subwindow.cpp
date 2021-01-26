@@ -9,10 +9,21 @@ SubWindow::SubWindow(const QCameraInfo &info, QWidget *p):QMdiSubWindow(p),x(20)
     display = new QCameraViewfinder;
     setWidget(display);
     setCameraInfo(info);
+
     camera = new QCamera(info);
+    save = new Save(camera,QDir::currentPath()+"/test.mp4");
+
     camera->setViewfinder(display);
+    camera->setCaptureMode(QCamera::CaptureVideo);
     camera->start();
+    save->start();
+
     working = true;
+}
+
+SubWindow::~SubWindow()
+{
+    stop();
 }
 
 bool SubWindow::isWorking()
@@ -47,5 +58,6 @@ QCameraViewfinder* SubWindow::getDisplay()
 void SubWindow::stop()
 {
     camera->stop();
+    save->stop();
     working=false;
 }

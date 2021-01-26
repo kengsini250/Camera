@@ -15,15 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
         cameraDialog->show();
         cameraDialog->activateWindow();
     });
-    settingDialog = new SettingDialog(this);
-    connect(ui->actionSetting,&QAction::triggered,[this]{
-       if (!settingDialog){
-            settingDialog = new SettingDialog(this);
-       }
-       settingDialog->setAllCamera(cameraDialog->getAllCamera());
-       settingDialog->show();
-       settingDialog->activateWindow();
-    });
 
     connect(cameraDialog,&CameraDialog::sendSelectedCamera,[this](const QCameraInfo& info){
 
@@ -36,6 +27,17 @@ MainWindow::MainWindow(QWidget *parent)
             display->show();
         }
     });
+
+    settingDialog = new SettingDialog(this);
+    connect(ui->actionSetting,&QAction::triggered,[this]{
+       if (!settingDialog){
+            settingDialog = new SettingDialog(this);
+       }
+       settingDialog->setAllCamera(cameraDialog->getAllCamera());
+       settingDialog->show();
+       settingDialog->activateWindow();
+    });
+
 }
 
 MainWindow::~MainWindow()
