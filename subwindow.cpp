@@ -11,12 +11,11 @@ SubWindow::SubWindow(const QCameraInfo &info, QWidget *p):QMdiSubWindow(p),x(20)
     setCameraInfo(info);
 
     camera = new QCamera(info);
-    save = new Save(camera,QDir::currentPath()+"/test.mp4");
-
     camera->setViewfinder(display);
     camera->setCaptureMode(QCamera::CaptureVideo);
+
+    save = new Save(camera,QDir::currentPath()+"/test.mp4");
     camera->start();
-    save->start();
 
     working = true;
 }

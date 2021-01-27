@@ -30,6 +30,10 @@ FORMS += mainwindow.ui \
         CameraDialog/cameradialog.ui \
         SettingDialog/settingdialog.ui
 
+INCLUDEPATH += "C:\opencv\build\include"
+INCLUDEPATH += "C:\opencv\build\include\opencv2"
+LIBS += "C:\opencv\build\x64\vc15\lib\opencv_world451d.lib"
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

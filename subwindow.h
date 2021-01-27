@@ -16,6 +16,7 @@ private:
     QCameraViewfinder* display;
     QCameraInfo info;
     QCamera* camera;
+
     Save* save;
 public:
     SubWindow(QWidget* p = nullptr);
