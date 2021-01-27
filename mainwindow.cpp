@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
        settingDialog->show();
        settingDialog->activateWindow();
     });
-
 }
 
 MainWindow::~MainWindow()
