@@ -10,7 +10,6 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 
-
 namespace Ui {
 class CameraDialog;
 }

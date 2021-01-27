@@ -3,14 +3,16 @@
 
 #include <QString>
 #include <QDir>
-#include <QUrl>
 #include <QCamera>
-#include <QMediaRecorder>
+#include <QVideoProbe>
 
-#define QT_MULTIMEDIA_PREFERRED_PLUGINS
+#include "opencv2/videoio.hpp"
+#include "imgproc/types_c.h"
+#include "imgproc/imgproc.hpp"
 
-class Save
+class Save : public QObject
 {
+    Q_OBJECT
 public:
     Save();
     Save(QCamera*);
@@ -20,7 +22,12 @@ public:
     void stop();
 private:
     bool working = false;
-    QMediaRecorder* save;
+    QString path;
+    QVideoProbe* probe;
+    cv::VideoWriter writer;
+
+private slots:
+    void makeVideo(const QVideoFrame&);
 };
 
 #endif // SAVE_H
