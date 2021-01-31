@@ -2,31 +2,32 @@
 #define SUBWINDOW_H
 
 #include <QMdiSubWindow>
-#include <QCameraViewfinder>
 #include <QCameraInfo>
-#include <QCamera>
+#include <QLabel>
 
+#include "camera.h"
 #include "save.h"
 
 class SubWindow : public QMdiSubWindow
 {
+    Q_OBJECT
 private:
     int x,y,w,h;
+    int id=-1;
     bool working = false;
-    QCameraViewfinder* display;
+    QLabel* display;
     QCameraInfo info;
-    QCamera* camera;
+    Camera* camera;
 
     Save* save;
 public:
     SubWindow(QWidget* p = nullptr);
-    SubWindow(const QCameraInfo& info, QWidget* p = nullptr);
+    SubWindow(int,const QCameraInfo& info, QWidget* p = nullptr);
     ~SubWindow();
     bool isWorking();
     void setPosSize(int x,int y,int w,int h);
     void setCameraInfo(const QCameraInfo& info);
     QCameraInfo& getCameraInfo();
-    QCameraViewfinder *getDisplay();
     void stop();
 };
 

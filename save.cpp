@@ -5,22 +5,19 @@ Save::Save()
 
 }
 
-Save::Save(QCamera *camera)
+Save::Save(Camera *c)
 {
 
 }
 
-Save::Save(QCamera *camera,QString savePath)
+Save::Save(Camera *camera,QString savePath)
 {
-    probe = new QVideoProbe;
-    probe->setSource(camera);
-    setPath(savePath);
-
-    writer.open(path.toStdString(),
-                cv::VideoWriter::fourcc('M', 'P', '4', '2'),
-                60,cv::Size(640, 480));
-
-    connect(probe, SIGNAL(videoFrameProbed(QVideoFrame)), this, SLOT(makeVideo(QVideoFrame)));
+    writer.open(savePath.toStdString(),
+//                cv::VideoWriter::fourcc('M', 'P', '4', 'S'),
+//                cv::VideoWriter::fourcc('M', 'J', 'P', 'G'),
+                cv::VideoWriter::fourcc('X', 'V', 'I', 'D'),
+                15,cv::Size(640, 480));
+    connect(camera,QOverload<const cv::Mat&>::of(&Camera::send),this,&Save::outputVideo);
 }
 
 void Save::setPath(QString savePath)
@@ -39,22 +36,9 @@ void Save::stop()
     writer.release();
 }
 
-void Save::makeVideo(const QVideoFrame &frame)
+void Save::outputVideo(const cv::Mat& frame)
 {
-    QVideoFrame copy = frame;
-    if (copy.map(QAbstractVideoBuffer::ReadOnly)) {
-        const cv::Mat mat(copy.height(), copy.width(), CV_8UC3,
-                          copy.bits(),copy.bytesPerLine());
-        cv::Mat result;
-        cvtColor(mat, result,CV_BGR2RGB);
-        writer<<result;
-    }else{
-        copy.map(QAbstractVideoBuffer::ReadOnly);
-        const cv::Mat mat(copy.height(), copy.width(), CV_8UC3,
-                          copy.bits(),copy.bytesPerLine());
-        cv::Mat result;
-        cvtColor(mat, result,CV_BGR2RGB);
-        writer<<result;
+    if(writer.isOpened()){
+        writer<<frame;
     }
-    copy.unmap();
 }

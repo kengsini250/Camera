@@ -3,19 +3,24 @@
 SubWindow::SubWindow(QWidget* p):QMdiSubWindow(p),x(20),y(20),w(200),h(200)
 {}
 
-SubWindow::SubWindow(const QCameraInfo &info, QWidget *p):QMdiSubWindow(p),x(20),y(20),w(200),h(200)
+SubWindow::SubWindow(int i,const QCameraInfo &info, QWidget *p):QMdiSubWindow(p),x(20),y(20),w(200),h(200),id(i)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    display = new QCameraViewfinder;
+    resize(w,h);
+    display = new QLabel(this);
+    display->resize(w,h);
     setWidget(display);
     setCameraInfo(info);
 
-    camera = new QCamera(info);
-    camera->setViewfinder(display);
-    camera->setCaptureMode(QCamera::CaptureVideo);
+    camera = new Camera(0,this);
+    connect(camera,QOverload<const QImage&>::of(&Camera::send),[this](const QImage&img){
+        display->setPixmap(QPixmap::fromImage(img));
+    });
 
-    save = new Save(camera,QDir::currentPath()+"/test.mp4");
+    save = new Save(camera,QDir::currentPath()+"/test.avi");
+
     camera->start();
+    save->start();
 
     working = true;
 }
@@ -47,11 +52,6 @@ void SubWindow::setCameraInfo(const QCameraInfo& info)
 QCameraInfo &SubWindow::getCameraInfo()
 {
     return info;
-}
-
-QCameraViewfinder* SubWindow::getDisplay()
-{
-    return display;
 }
 
 void SubWindow::stop()
