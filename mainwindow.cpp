@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
         int pos = findCamera(info);
         if(pos!=-1){
         }else{
-            auto display = new SubWindow(info,this);
+            auto display = new SubWindow(pos,info,this);
             allDisplay.push_back(display);
             ui->mdiArea->addSubWindow(display);
             display->show();
