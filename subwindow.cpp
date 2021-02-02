@@ -8,16 +8,16 @@ SubWindow::SubWindow(int i,const QCameraInfo &info, QWidget *p):QMdiSubWindow(p)
     setAttribute(Qt::WA_DeleteOnClose);
     resize(w,h);
     display = new QLabel(this);
-    display->resize(w,h);
+    display->move(0,20);
     setWidget(display);
-    setCameraInfo(info);
 
-    camera = new Camera(0,this);
+    setCameraInfo(info);
+    camera = new Camera(i,this);
     connect(camera,QOverload<const QImage&>::of(&Camera::send),[this](const QImage&img){
         display->setPixmap(QPixmap::fromImage(img));
     });
 
-    save = new Save(camera,QDir::currentPath()+"/test.avi");
+    save = new Save(camera,QDir::currentPath(),"test",".avi");
 
     camera->start();
     save->start();
@@ -28,6 +28,8 @@ SubWindow::SubWindow(int i,const QCameraInfo &info, QWidget *p):QMdiSubWindow(p)
 SubWindow::~SubWindow()
 {
     stop();
+    delete camera;
+    delete save;
 }
 
 bool SubWindow::isWorking()
@@ -56,7 +58,9 @@ QCameraInfo &SubWindow::getCameraInfo()
 
 void SubWindow::stop()
 {
-    camera->stop();
     save->stop();
+    camera->stop();
     working=false;
+    emit sendCameraInfo(info);
 }
+

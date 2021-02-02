@@ -18,7 +18,6 @@ private:
     QLabel* display;
     QCameraInfo info;
     Camera* camera;
-
     Save* save;
 public:
     SubWindow(QWidget* p = nullptr);
@@ -29,6 +28,9 @@ public:
     void setCameraInfo(const QCameraInfo& info);
     QCameraInfo& getCameraInfo();
     void stop();
+protected:
+signals:
+    void sendCameraInfo(const QCameraInfo&);
 };
 
 #endif // SUBWINDOW_H

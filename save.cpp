@@ -5,14 +5,15 @@ Save::Save()
 
 }
 
-Save::Save(Camera *c)
+Save::Save(Camera *camera,QString savePath,QString n,QString f)
 {
+    setPath(savePath);
+    this->name=n+f;
+    currTime=QDateTime::currentDateTime().toString(Date::time1);
+    this->format = f;
 
-}
-
-Save::Save(Camera *camera,QString savePath)
-{
-    writer.open(savePath.toStdString(),
+    writer.open(
+                name.toStdString(),
 //                cv::VideoWriter::fourcc('M', 'P', '4', 'S'),
 //                cv::VideoWriter::fourcc('M', 'J', 'P', 'G'),
                 cv::VideoWriter::fourcc('X', 'V', 'I', 'D'),
@@ -27,18 +28,20 @@ void Save::setPath(QString savePath)
 
 void Save::start()
 {
-    working = true;
+    working=true;
 }
 
 void Save::stop()
 {
-    working = false;
+    working=false;
     writer.release();
+    date.changeName(name,currTime,format);
 }
 
 void Save::outputVideo(const cv::Mat& frame)
 {
-    if(writer.isOpened()){
+    if(writer.isOpened() && working){
+//    if(writer.isOpened()){
         writer<<frame;
     }
 }
