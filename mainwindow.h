@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QList>
+#include <QMap>
 #include <QtAlgorithms>
 
 #include "CameraDialog/cameradialog.h"
@@ -23,16 +23,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QMap<QString,SubWindow*> allDisplay;
 
     CameraDialog* cameraDialog;
     SettingDialog* settingDialog;
-    QList<SubWindow*> allDisplay;
-
-    /**
-     * @brief findCamera
-     * @param info
-     * @return 不重复返回-1
-     */
-    int findCamera(const QCameraInfo& info);
 };
 #endif // MAINWINDOW_H

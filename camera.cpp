@@ -3,9 +3,10 @@
 Camera::Camera(QObject* p):QObject(p)
 {}
 
-Camera::Camera(int i,QObject* p):id(i),QObject(p)
+Camera::Camera(int i,QObject* p):QObject(p)
 {
-    open(i);
+    id=i;
+    open(id);
     timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, [&]{
