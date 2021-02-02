@@ -16,15 +16,19 @@ MainWindow::MainWindow(QWidget *parent)
         cameraDialog->activateWindow();
     });
 
-    connect(cameraDialog,&CameraDialog::sendSelectedCamera,[this](const QCameraInfo& info){
-
-        int pos = findCamera(info);
-        if(pos!=-1){
+    connect(cameraDialog,&CameraDialog::sendSelectedCamera,[this](int id,const QCameraInfo& info){
+        auto pos = allDisplay.find(info.description());
+        if(pos!=allDisplay.end()){
+            pos.value()->show();
         }else{
-            auto display = new SubWindow(pos,info,this);
-            allDisplay.push_back(display);
+            qDebug()<<id;
+            auto display = new SubWindow(id,info,this);
+            allDisplay.insert(info.description(),display);
             ui->mdiArea->addSubWindow(display);
             display->show();
+            connect(display,&SubWindow::sendCameraInfo,[this](const QCameraInfo& info){
+                allDisplay.remove(info.description());
+            });
         }
     });
 
@@ -43,15 +47,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-int MainWindow::findCamera(const QCameraInfo &info)
-{
-    for(int i = 0;i!=allDisplay.count();i++)
-    {
-        if(info.description() == allDisplay[i]->getCameraInfo().description()){
-            return i;
-        }
-    }
-    return -1;
-}
-
