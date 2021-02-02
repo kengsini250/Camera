@@ -38,7 +38,7 @@ private:
 private slots:
     void selectedCamera();
 signals:
-    void sendSelectedCamera(const QCameraInfo&);
+    void sendSelectedCamera(int ,const QCameraInfo&);
 };
 
 #endif // CAMERADIALOG_H

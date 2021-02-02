@@ -53,7 +53,8 @@ void CameraDialog::selectedCamera()
 {
     auto t = ui->listView->currentIndex();
     auto temp = allCamera.find(t.data().toString());
-    if(temp!=allCamera.end())
-        emit sendSelectedCamera(temp.value());
+    if(temp!=allCamera.end()){
+        emit sendSelectedCamera(t.row(),temp.value());
+    }
     this->close();
 }
