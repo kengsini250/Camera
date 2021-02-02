@@ -13,7 +13,7 @@ CONFIG += c++11
 # Input
 HEADERS += \
            SettingDialog/settingdialog.h \
-           cameraframe.h \
+           date.h \
            mainwindow.h \
            CameraDialog/cameradialog.h \
            save.h \
@@ -22,7 +22,7 @@ HEADERS += \
 
 SOURCES += \
         SettingDialog/settingdialog.cpp \
-        cameraframe.cpp \
+        date.cpp \
         main.cpp \
         mainwindow.cpp \
         CameraDialog/cameradialog.cpp \
@@ -41,11 +41,10 @@ INCLUDEPATH += "C:\opencv\build\include\opencv2"
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
-#else: win32:LIBS+= "C:/opencv/build/x64/vc15/lib/opencv_world451d.lib"
-else: win32:LIBS+= \
-\"C:/opencv/build_g++/lib/libopencv_core451.dll.a" \
-\"C:/opencv/build_g++/lib/libopencv_imgproc451.dll.a" \
-\"C:/opencv/build_g++/lib/libopencv_highgui451.dll.a" \
-\"C:/opencv/build_g++/lib/libopencv_videoio451.dll.a"
-
+else: win32:LIBS+= "C:/opencv/build/x64/vc15/lib/opencv_world451d.lib"
+#else: win32:LIBS+= \
+#\"C:/opencv/build_g++/lib/libopencv_core451.dll.a" \
+#\"C:/opencv/build_g++/lib/libopencv_imgproc451.dll.a" \
+#\"C:/opencv/build_g++/lib/libopencv_highgui451.dll.a" \
+#\"C:/opencv/build_g++/lib/libopencv_videoio451.dll.a"
 !isEmpty(target.path): INSTALLS += target
